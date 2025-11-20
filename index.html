@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>EDGE Remake</title>
+<style>
+html,body{
+margin:0;
+padding:0;
+width:100%;
+height:100%;
+background:#000;
+overflow:hidden;
+font-family:Arial, sans-serif;
+color:white;
+}
+#stars{
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background:radial-gradient(circle at center, #222 0%, #000 70%);
+z-index:-1;
+}
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+opacity:0;
+animation:twinkle 4s infinite ease-in-out;
+}
+@keyframes twinkle{
+0%{opacity:0;}
+50%{opacity:1;}
+100%{opacity:0;}
+}
+.container{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+}
+.title{
+font-size:60px;
+letter-spacing:4px;
+text-shadow:0 0 15px #5bf9ff;
+margin-bottom:20px;
+}
+.subtitle{
+font-size:22px;
+opacity:.8;
+margin-bottom:40px;
+}
+.button{
+display:inline-block;
+padding:15px 40px;
+background:#00bcd4;
+border-radius:8px;
+text-decoration:none;
+color:black;
+font-size:20px;
+font-weight:bold;
+transition:.3s;
+}
+.button:hover{
+background:#5bf9ff;
+}
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<div class="container">
+<div class="title">EDGE Remake</div>
+<div class="subtitle">Un viaje cúbico a través del espacio</div>
+<a class="button" href="#">Entrar</a>
+</div>
+
+<script>
+function createStars(){
+const container=document.getElementById("stars");
+for(let i=0;i<200;i++){
+let s=document.createElement("div");
+s.className="star";
+s.style.top=Math.random()*100+"%";
+s.style.left=Math.random()*100+"%";
+s.style.animationDelay=Math.random()*4+"s";
+s.style.opacity=Math.random();
+container.appendChild(s);
+}
+}
+createStars();
+</script>
+
+</body>
+</html>
