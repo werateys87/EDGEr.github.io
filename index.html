@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ProyectEDGE - El Futuro Empieza Aquí</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00ffff;
+      --secondary: #ff00ff;
+      --dark: #0d0d1f;
+      --glass: rgba(10, 10, 30, 0.6);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 50%, #1a0033, #000);
+    }
+    canvas { position: fixed; top:0; left:0; z-index: -1; }
+
+    /* Header con glow intenso */
+    header {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .glitch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9vw;
+      font-weight: 900;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 2s ease-in-out infinite alternate, glitch 4s infinite;
+      text-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary), 0 0 80px var(--primary);
+    }
+    @keyframes glow { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
+    @keyframes glitch {
+      0%,100% { transform: translate(0); }
+      20% { transform: translate(-5px, 5px); }
+      40% { transform: translate(-5px, -5px); }
+      60% { transform: translate(5px, 5px); }
+      80% { transform: translate(5px, -5px); }
+    }
+
+    .subtitle {
+      font-size: 2rem;
+      margin: 20px 0;
+      opacity0: 0;
+      animation: fadeIn 2s forwards 1s;
+      text-shadow: 0 0 10px var(--primary);
+    }
+    .btn-glow {
+      padding: 18px 50px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--primary);
+      border: 3px solid var(--primary);
+      border-radius: 50px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+      box-shadow: 0 0 20px var(--primary);
+      animation: pulse 2s infinite;
+    }
+    .btn-glow:hover {
+      background: var(--primary);
+      color: #000;
+      box-shadow: 0 0 50px var(--primary), 0 0 100px var(--primary);
+      transform: scale(1.1);
+    }
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.7s;
+    }
+    .btn-glow:hover::before { left: 100%; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px var(--primary); }
+      50% { box-shadow: 0 0 40px var(--primary), 0 0 80px var(--primary); }
+      100% { box-shadow: 0 0 20px var(--primary); }
+    }
+
+    /* Secciones con glassmorphism y scroll reveal */
+    section {
+      padding: 100px 10%;
+      backdrop-filter: blur(10px);
+      background: var(--glass);
+      border: 1px solid rgba(0,255,255,0.2);
+      margin: 50px auto;
+      max-width: 1200px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,255,255,0.3);
+      opacity: 0;
+      transform: translateY(100px);
+      transition: all 1.2s;
+    }
+    section.visible { opacity:1; transform: translateY(0); }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      text-align: center;
+      margin-bottom: 50px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px var(--primary);
+    }
+
+    /* Partículas flotantes */
+    .particle {
+      position: absolute;
+      background: var(--primary);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 15s infinite linear;
+      box-shadow: 0 0 20px var(--primary);
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles"></canvas>
+
+  <header>
+    <h1 class="glitch" data-text="ProyectEDGE">ProyectEDGE</h1>
+    <p class="subtitle">Innovación sin límites • Tecnología del mañana</p>
+    <button class="btn-glow" onclick="document.getElementById('download').scrollIntoView({behavior:'smooth'})">
+      Descargar Ahora
+    </button>
+  </header>
+
+  <section id="about">
+    <h2>Sobre ProyectEDGE</h2>
+    <p style="font-size:1.5rem; line-height:2; text-align:center; max-width:900px; margin:0 auto;">
+      ProyectEDGE es la próxima revolución tecnológica. Velocidad extrema, seguridad cuántica y un diseño que rompe todas las reglas. 
+      Prepárate para vivir el futuro hoy.
+    </p>
+  </section>
+
+  <section id="features">
+    <h2>Características Épicas</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:30px;">
+      <div style="background:rgba(0,255,255,0.1); padding:30px; border-radius:20px; text-align:center; border:1px solid var(--primary); box-shadow:0 0 20px rgba(0,255,255,0.4);">
+        <h3 style="color:var(--primary); font-size:2rem;">Velocidad 300x</h3>
+        <p>Rendimiento nunca antes visto</p>
+      </div>
+      <div style="background:rgba(255,0,255,0.1); padding:30px; border-radius:20px; text-align:center; border:1px solid var(--secondary); box-shadow:0 0 20px rgba(255,0,255,0.4);">
+        <h3 style="color:var(--secondary); font-size:2rem;">Cifrado Cuántico</h3>
+        <p>Seguridad absoluta</p>
+      </div>
+      <div style="background:rgba(0,255,255,0.1); padding:30px; border-radius:20px; text-align:center; border:1px solid var(--primary); box-shadow:0 0 20px rgba(0,255,255,0.4);">
+        <h3 style="color:var(--primary); font-size:2rem;">Interfaz Neural</h3>
+        <p>Control con la mente</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <h2>Descarga ProyectEDGE</h2>
+    <div style="text-align:center;">
+      <a href="#" class="btn-glow" style="display:inline-block; font-size:2rem; padding:25px 80px;">
+        DESCARGAR v1.0.0
+      </a>
+      <p style="margin-top:30px; font-size:1.3rem;">Windows • macOS • Linux • Android • iOS</p>
+    </div>
+  </section>
+
+  <script>
+    // Partículas de fondo
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+    class Particle {
+      constructor(){
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + 50;
+        this.size = Math.random() * 5 + 1;
+        this.speedX = Math.random() * 1.5 - 0.75;
+        this.speedY = Math.random() * 2 + 0.5;
+      }
+      update(){
+        this.x += this.speedX;
+        this.y -= this.speedY;
+        if (this.y < -50) this.y = canvas.height + 50;
+      }
+      draw(){
+        ctx.fillStyle = 'rgba(0,255,255,0.8)';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#00ffff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles(){
+      particlesArray = [];
+      for(let i=0; i<100; i++){
+        particlesArray.push(new Particle());
+      }
+    }
+    initParticles();
+
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particlesArray.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    });
+
+    // Scroll reveal
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // Partículas al mover el ratón
+    document.addEventListener('mousemove', (e) => {
+      for(let i=0; i<3; i++){
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        p.style.width = p.style.height = Math.random()*8 + 4 + 'px';
+        p.style.left = e.clientX + 'px';
+        p.style.top = e.clientY + 'px';
+        p.style.animationDuration = Math.random()*10 + 10 + 's';
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 15000);
+      }
+    });
+  </script>
+</body>
+</html>
